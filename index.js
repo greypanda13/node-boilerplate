@@ -13,9 +13,10 @@ app.set("view engine", "ejs");
 
 // include (use) middleware
 app.use(layouts);
+app.use(express.urlencoded({ extended: false }));
 
 // include routes from controllers
-
+app.use("/auth", require("./controllers/auth"));
 
 // make a home route: GET /
 app.get("/", (req, res) => {
