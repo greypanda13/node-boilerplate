@@ -33,14 +33,31 @@ router.post("/signup", (req, res) => {
       defaults: req.body
     })
     .spread((user, wasCreated) => {
-      req.flash("success", "You successfully created a ");
+      req.flash("success", "Your request was successful");
       res.redirect("/");
     })
     .catch((err) => {
-      console.log("err in POST /auth/audn", err);
+      // print all error info to terminal (not okay for user eyes)
+      console.log("err in POST /auth/signup") //, err);
+
+      // Generic error (all cases)
+      req.flash("error", "Server error");
+
+      // validation-specific (okay to show to user)
+      console.log('errors len', err.errors.length)
+      if (err && err.errors) {
+        console.log('hello')
+        err.errors.forEach((e) => {
+          console.log(e.type)
+          if (e.type == "Validation error") {
+            req.flash("error", "Validation issue - " + e.message);
+          }
+        })
+      }
+
+      res.redirect("/auth/signup");
     });
-    // req.flash("success", "Account successfully created");
-    // res.redirect("/");
+
   }
 });
 
