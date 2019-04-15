@@ -4,6 +4,9 @@ let express = require("express");
 // declare an express router
 let router = express.Router();
 
+// reference the models
+let db = require("../models");
+
 // declare routes
 router.get("/login", (req, res) => {
   res.render("auth/login");
@@ -25,8 +28,19 @@ router.post("/signup", (req, res) => {
     req.flash("error", "Passwords do not match");
     res.redirect("auth/signup");
   } else {
-    req.flash("success", "Account successfully created");
-    res.redirect("/");
+    db.user.findOrCreate({
+      where: { email: req.body.email},
+      defaults: req.body
+    })
+    .spread((user, wasCreated) => {
+      req.flash("success", "You successfully created a ");
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log("err in POST /auth/audn", err);
+    });
+    // req.flash("success", "Account successfully created");
+    // res.redirect("/");
   }
 });
 
