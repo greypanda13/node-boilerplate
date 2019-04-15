@@ -19,8 +19,15 @@ router.get("/signup", (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  res.send("Reached the route POST to /auth/signup")
   console.log(req.body);
+  if(req.body.password !== req.body.password2) {
+    console.log("pw doesn't match bro");
+    req.flash("error", "Passwords do not match");
+    res.redirect("auth/signup");
+  } else {
+    req.flash("success", "Account successfully created");
+    res.redirect("/");
+  }
 });
 
 // export router object so routes usable elsewhere

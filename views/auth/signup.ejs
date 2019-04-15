@@ -1,0 +1,27 @@
+<h1>Sign Up</h1>
+<p>Already have a login? Go to the <a href="/auth/login">login page</a> instead!</p>
+<div class="row">
+  <form action="/auth/signup" method="post">
+    <div class="row">
+      <div class="input-field col s12">
+        <input class="validate" id="email" placeholder="Your e-mail" type="email" name="email">
+        <label for="email">E-mail</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input class="validate" id="password" placeholder="Your password" type="password" name="password">
+        <label for="password">Password</label>
+      </div>
+      <div class="input-field col s6">
+        <input class="validate" id="password2" placeholder="Your password" type="password" name="password2">
+        <label for="password">Re-type password</label>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn waves-effect waves-light" type="submit" name="action">Sign up
+        <i class="material-icons right"></i>
+      </button>
+    </div>
+  </form>
+</div>

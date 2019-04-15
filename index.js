@@ -5,6 +5,7 @@ require("dotenv").config();
 let express = require("express");
 let flash = require("connect-flash");
 let layouts = require("express-ejs-layouts");
+let session = require("express-session");
 
 // declare express app
 let app = express();
@@ -14,8 +15,19 @@ app.set("view engine", "ejs");
 
 // include (use) middleware
 app.use(layouts);
-app.use(flash());
 app.use(express.urlencoded({ extended: false }));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash());
+
+// custom middleware - write data to locals
+app.use((req, res, next) => {
+  res.locals.alerts = req.flash();
+  next();
+});
 
 // include routes from controllers
 app.use("/auth", require("./controllers/auth"));
