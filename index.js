@@ -14,6 +14,7 @@ let app = express();
 app.set("view engine", "ejs");
 
 // include (use) middleware
+app.use("/", express.static("public"));
 app.use(layouts);
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
