@@ -32,11 +32,19 @@ app.use((req, res, next) => {
 
 // include routes from controllers
 app.use("/auth", require("./controllers/auth"));
+app.use("/profile", require("./controllers/profile"));
 
 // make a home route: GET /
 app.get("/", (req, res) => {
   res.render("home");
 });
 
+// catch-all route - 404
+app.get("*", (req, res) => {
+  res.render("404");
+})
+
 // listen on specified port
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () => {
+  console.log("listening");
+});

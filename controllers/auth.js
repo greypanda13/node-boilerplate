@@ -66,5 +66,10 @@ router.post("/signup", (req, res) => {
   }
 });
 
+// GET logout
+router.get("/logout", (req, res) => {
+  res.send("logout stub")
+})
+
 // export router object so routes usable elsewhere
 module.exports = router;
