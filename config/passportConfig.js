@@ -1,6 +1,7 @@
 // require passport and any passport strategies you wish to use.
 let passport = require("passport");
-let localStrategy = require("passport-local").Strategy;
+let LocalStrategy = require("passport-local").Strategy;
+
 
 // reference to models
 let db = require("../models")
@@ -24,10 +25,21 @@ passport.deserializeUser((id, callback) => {
 
 // set up LocalStrategy.
 passport.use(new LocalStrategy({
-  usernameField: "email"
+  usernameField: "email",
   passwordField: "password"
 }, (email, password, callback) => {
   db.user.findOne({
-    where: {email: email;
-  })
-}
+    where: { email: email }
+})
+.then(foundUser => {
+  if (!foundUser || !foundUser.validPassword(password)) {
+    callback(null,null)
+
+  } else {
+    callback(null, foundUser)
+  }
+})
+.catch(callback)
+}));
+
+module.exports = passport

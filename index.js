@@ -7,6 +7,9 @@ let flash = require("connect-flash");
 let layouts = require("express-ejs-layouts");
 let session = require("express-session");
 
+// include passport config
+let passport = require("./config/passportConfig");
+
 // declare express app
 let app = express();
 
@@ -23,10 +26,13 @@ app.use(session({
   saveUninitialized: true
 }));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // custom middleware - write data to locals
 app.use((req, res, next) => {
   res.locals.alerts = req.flash();
+  res.locals.user = req.user;
   next();
 });
 
@@ -45,6 +51,6 @@ app.get("*", (req, res) => {
 })
 
 // listen on specified port
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3003, () => {
   console.log("listening");
 });

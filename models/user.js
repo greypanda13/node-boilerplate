@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Proceeding with no picture upload"
         }
       }
+    },
+    admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
   }, {
     hooks: {
@@ -57,8 +61,8 @@ module.exports = (sequelize, DataTypes) => {
   user.associate = function(models) {
     // associations can be defined here
   };
-  user.protorype.associate = function(typedInPasswrod) {
-    return bcrypt.compareSync(typedInPassword, This.pawer)
+  user.prototype.validPassword = function(typedInPassword) {
+    return bcrypt.compareSync(typedInPassword, this.password)
   }
   return user;
 };
