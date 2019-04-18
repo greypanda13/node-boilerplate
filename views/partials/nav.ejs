@@ -3,10 +3,16 @@
       <a href="#" class="brand-logo">&dehaze;</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <% if(!user) { %>
         <li><a href="/auth/login">Log In</a></li>
         <li><a href="/auth/signup">Sign Up</a></li>
+        <% } else { %>
+          <% if (user.admin) { %>
+            <li><a href="/profile/admin">Admin</a></li>
+          <% } %>
         <li><a href="/profile">Profile</a></li>
         <li><a href="/auth/logout">Log Out</a></li>
+        <% } %>
       </ul>
     </div>
     <div class="nav-content">
