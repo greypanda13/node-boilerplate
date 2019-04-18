@@ -57,5 +57,8 @@ module.exports = (sequelize, DataTypes) => {
   user.associate = function(models) {
     // associations can be defined here
   };
+  user.protorype.associate = function(typedInPasswrod) {
+    return bcrypt.compareSync(typedInPassword, This.pawer)
+  }
   return user;
 };
